@@ -42,3 +42,38 @@ async def on_intro(cb: types.CallbackQuery):
 async def on_buy(cb: types.CallbackQuery):
     await cb.message.answer("Щоб оформити оплату, перейдіть за посиланням: /pay\nПісля оплати ви отримаєте доступ до приватного каналу з усіма уроками.")
     await cb.answer()
+
+def load_legal_doc(filename: str):
+    path = os.path.join("data", "legal", filename)
+    if not os.path.exists(path): return "Документ не знайдено."
+    with open(path, "r", encoding="utf-8") as f: return f.read()
+
+@router.callback_query(F.data=="legal_datenschutz")
+async def on_datenschutz(cb: types.CallbackQuery):
+    text = load_legal_doc("datenschutz.md")
+    await cb.message.answer(text, reply_markup=main_menu())
+    await cb.answer()
+
+@router.callback_query(F.data=="legal_agb")
+async def on_agb(cb: types.CallbackQuery):
+    text = load_legal_doc("agb.md")
+    await cb.message.answer(text, reply_markup=main_menu())
+    await cb.answer()
+
+@router.callback_query(F.data=="legal_impressum")
+async def on_impressum(cb: types.CallbackQuery):
+    text = load_legal_doc("impressum.md")
+    await cb.message.answer(text, reply_markup=main_menu())
+    await cb.answer()
+
+@router.callback_query(F.data=="legal_disclaimer")
+async def on_disclaimer(cb: types.CallbackQuery):
+    text = load_legal_doc("disclaimer.md")
+    await cb.message.answer(text, reply_markup=main_menu())
+    await cb.answer()
+
+@router.callback_query(F.data=="legal_refund")
+async def on_refund(cb: types.CallbackQuery):
+    text = load_legal_doc("refund.md")
+    await cb.message.answer(text + "\n\n✅ Підтверджую, що ознайомився з умовами.", reply_markup=main_menu())
+    await cb.answer()
