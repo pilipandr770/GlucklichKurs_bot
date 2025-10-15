@@ -1,14 +1,14 @@
 # Render deployment configuration for GlückenKurs Bot
 services:
-  # FastAPI Web Server (для Stripe webhooks та оплати)
+  # Unified service: FastAPI + Telegram Bot в одному процесі
   - type: web
-    name: gluckenkurs-web
+    name: gluckenkurs-bot
     runtime: python
     region: frankfurt
     plan: free
     branch: main
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app.web.server:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+    startCommand: python scripts/migrate_db.py && python -m app.main
     envVars:
       - key: DATABASE_URL
         sync: false
@@ -33,7 +33,7 @@ services:
       - key: STRIPE_PRODUCT_ID
         sync: false
       - key: BASE_URL
-        value: https://gluckenkurs-web.onrender.com
+        value: https://gluckenkurs-bot.onrender.com
       - key: INTRO_CHANNEL_ID
         sync: false
       - key: PAID_CHANNEL_ID
@@ -42,46 +42,9 @@ services:
         value: 3
     healthCheckPath: /health
 
-  # Telegram Bot Worker (фоновий процес)
-  - type: worker
-    name: gluckenkurs-bot
-    runtime: python
-    region: frankfurt
-    plan: free
-    branch: main
-    buildCommand: pip install -r requirements.txt
-    startCommand: python scripts/migrate_db.py && python -m app.bot.main
-    envVars:
-      - key: DATABASE_URL
-        sync: false
-      - key: DB_SCHEMA
-        value: gluckenkurs
-      - key: TELEGRAM_BOT_TOKEN
-        sync: false
-      - key: OPENAI_API_KEY
-        sync: false
-      - key: OPENAI_MODEL_GPT
-        value: gpt-4o-mini
-      - key: OPENAI_MODEL_TTS
-        value: tts-1
-      - key: OPENAI_MODEL_STT
-        value: whisper-1
-      - key: STRIPE_SECRET_KEY
-        sync: false
-      - key: STRIPE_WEBHOOK_SECRET
-        sync: false
-      - key: STRIPE_PUBLISHABLE_KEY
-        sync: false
-      - key: STRIPE_PRODUCT_ID
-        sync: false
-      - key: BASE_URL
-        value: https://gluckenkurs-web.onrender.com
-      - key: INTRO_CHANNEL_ID
-        sync: false
-      - key: PAID_CHANNEL_ID
-        sync: false
-      - key: REMINDER_DAYS
-        value: 3
-
-# Примітка: DATABASE_URL буде автоматично взято з вашої існуючої PostgreSQL БД на Render
-# DB_SCHEMA=gluckenkurs створить окрему схему для цього проекту
+# Примітка: 
+# - Один сервіс замість двох (економія коштів)
+# - FastAPI запускається в окремому потоці
+# - Telegram bot працює в головному потоці
+# - DATABASE_URL буде взято з вашої існуючої PostgreSQL БД на Render
+# - DB_SCHEMA=gluckenkurs створить окрему схему для ізоляції даних
