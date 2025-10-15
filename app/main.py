@@ -30,7 +30,7 @@ async def run_bot():
     from aiogram import Bot, Dispatcher
     from aiogram.enums import ParseMode
     from aiogram.client.default import DefaultBotProperties
-    from app.bot.handlers import start, text, voice, buy, legal
+    from app.bot.handlers import start, text, voice, buy, legal, channel
     from app.bot.utils.reminders import start_reminders
     
     TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -63,11 +63,12 @@ async def run_bot():
     
     dp = Dispatcher()
     
-    # Реєструємо роутери
+    # Реєструємо роутери (channel має бути ПЕРЕД text, щоб спочатку перевірити chat_id)
     dp.include_router(start.router)
     dp.include_router(buy.router)
     dp.include_router(legal.router)
-    dp.include_router(text.router)
+    dp.include_router(channel.router)  # Повідомлення з каналу/чату
+    dp.include_router(text.router)      # Приватні повідомлення
     dp.include_router(voice.router)
     
     # Запускаємо планувальник нагадувань
