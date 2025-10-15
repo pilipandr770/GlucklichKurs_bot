@@ -3,15 +3,13 @@ services:
   # FastAPI Web Server (для Stripe webhooks та оплати)
   - type: web
     name: gluckenkurs-web
-    env: python
+    runtime: python
     region: frankfurt
     plan: free
     branch: main
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app.web.server:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.9
       - key: DATABASE_URL
         sync: false
       - key: DB_SCHEMA
@@ -47,15 +45,13 @@ services:
   # Telegram Bot Worker (фоновий процес)
   - type: worker
     name: gluckenkurs-bot
-    env: python
+    runtime: python
     region: frankfurt
     plan: free
     branch: main
     buildCommand: pip install -r requirements.txt
     startCommand: python scripts/migrate_db.py && python -m app.bot.main
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.9
       - key: DATABASE_URL
         sync: false
       - key: DB_SCHEMA
