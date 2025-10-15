@@ -19,8 +19,14 @@ def load_intro_lesson():
 
 @router.message(CommandStart())
 async def on_start(msg: types.Message):
+    from ..keyboards.persistent import persistent_menu
     upsert_user(msg.from_user.id, msg.from_user.username)
-    await msg.answer("Вітаю! Це курс «10 кроків до щастя» 😊\nОбери дію з меню нижче:", reply_markup=main_menu())
+    await msg.answer(
+        "Вітаю! Це курс «10 кроків до щастя» 😊\n\n"
+        "Оберіть дію з меню нижче або використовуйте кнопки внизу для швидкого доступу до юридичних документів.",
+        reply_markup=persistent_menu()
+    )
+    await msg.answer("Головне меню:", reply_markup=main_menu())
 
 @router.callback_query(F.data=="about")
 async def on_about(cb: types.CallbackQuery):
