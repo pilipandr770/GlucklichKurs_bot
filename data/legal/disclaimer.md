@@ -80,9 +80,10 @@ Der Online-Kurs "10 Schritte zum Glück" ist ein **Bildungsprodukt** für persö
 ## Bei Krise oder Notfall / У разі кризи або надзвичайної ситуації
 
 **Deutschland / Німеччина:**
-- Notruf: 112
-- Telefonseelsorge: 0800 111 0 111
-- Ärztlicher Bereitschaftsdienst: 116 117
+- Notruf / Екстрена допомога: 112
+- Telefonseelsorge / Телефон довіри: 0800 111 0 111
+- Ärztlicher Bereitschaftsdienst / Чергова служба: 116 117
+- Frankfurt Universitätsklinik: +49 69 6301-1
 
 **Ukraine / Україна:**
 - Швидка допомога: 103
@@ -92,6 +93,10 @@ Der Online-Kurs "10 Schritte zum Glück" ist ein **Bildungsprodukt** für persö
 **International:**
 - Befrienders Worldwide: https://www.befrienders.org
 - Suicide Prevention: https://www.iasp.info/resources/Crisis_Centres/
+
+**Bei technischen Fragen zum Kurs:**
+E-Mail: andrii.it.info@gmail.com
+Telegram: @GlucklichKurs_bot
 
 ## Medizinischer Rat / Медична порада
 

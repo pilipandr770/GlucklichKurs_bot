@@ -115,5 +115,10 @@ Es gilt deutsches Recht unter Ausschluss des UN-Kaufrechts.
 ---
 
 **Kontakt / Контакт:**
-E-Mail: support@gluckenkurs.com
+Andrii Pylypchuk
+Bergmannweg 16, 65934 Frankfurt am Main, Deutschland
+
+E-Mail: andrii.it.info@gmail.com
+Telefon: +49 160 95030120
 Telegram: @GlucklichKurs_bot
+Website: https://www.andrii-it.de/

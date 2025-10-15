@@ -153,8 +153,10 @@ Bevor Sie kaufen, stellen Sie sicher:
 Wenn Sie Fragen haben, kontaktieren Sie uns:
 Якщо у вас є питання, зв'яжіться з нами:
 
-📧 E-Mail: support@gluckenkurs.com
+📧 E-Mail: andrii.it.info@gmail.com
+📞 Telefon: +49 160 95030120
 💬 Telegram: Senden Sie eine Nachricht an den Bot
+🌐 Website: https://www.andrii-it.de/
 
 **NACH DEM KAUF:**
 Bei technischen Problemen (z.B. kein Zugang) helfen wir Ihnen gerne!

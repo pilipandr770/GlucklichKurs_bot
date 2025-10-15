@@ -8,31 +8,32 @@
 GlückenKurs - Online Bildung
 
 **Vertreten durch / Представлено:**
-[Ihr vollständiger Name / Ваше повне ім'я]
+Andrii Pylypchuk
 
 **Anschrift / Адреса:**
-[Straße und Hausnummer / Вулиця та номер будинку]
-[PLZ und Ort / Поштовий індекс та місто]
-[Land / Країна]
+Bergmannweg 16
+65934 Frankfurt am Main
+Deutschland / Німеччина
 
 ## Kontakt / Контакти
 
-**E-Mail:** support@gluckenkurs.com
+**E-Mail:** andrii.it.info@gmail.com
+**Telefon:** +49 160 95030120
 **Telegram:** @GlucklichKurs_bot
-**Website:** https://gluckenkurs.com (optional)
+**Website:** https://www.andrii-it.de/
 
 ## Umsatzsteuer-ID / ІПН
 
 **USt-IdNr. gemäß § 27a UStG:**
-[Ihre Umsatzsteuer-Identifikationsnummer / Ваш ІПН]
-
-*(Falls Sie umsatzsteuerpflichtig sind / якщо ви є платником ПДВ)*
+DE456902445
 
 ## Verantwortlich für den Inhalt / Відповідальний за контент
 
 **Verantwortlich nach § 55 Abs. 2 RStV:**
-[Ihr vollständiger Name / Ваше повне ім'я]
-[Anschrift wie oben / Адреса як вище]
+Andrii Pylypchuk
+Bergmannweg 16
+65934 Frankfurt am Main
+Deutschland
 
 ## Streitschlichtung / Врегулювання спорів
 
@@ -82,8 +83,4 @@ Dublin, D02 H210, Ireland
 
 ---
 
-*Stand / Дата: 15. Oktober 2025*
-
-**Hinweis / Примітка:**
-Bitte ersetzen Sie die Platzhalter [in eckigen Klammern] mit Ihren tatsächlichen Daten.
-Будь ласка, замініть заповнювачі [у квадратних дужках] вашими фактичними даними.
+**Stand / Дата:** 15. Oktober 2025

@@ -4,8 +4,16 @@
 
 ## 1. Verantwortlicher / Відповідальна особа
 
-GlückenKurs
-E-Mail: support@gluckenkurs.com
+**GlückenKurs - Online Bildung**
+Andrii Pylypchuk
+Bergmannweg 16
+65934 Frankfurt am Main
+Deutschland
+
+**Kontakt / Контакт:**
+E-Mail: andrii.it.info@gmail.com
+Telefon: +49 160 95030120
+Website: https://www.andrii-it.de/
 
 ## 2. Erhebung und Speicherung personenbezogener Daten / Збір та зберігання персональних даних
 
@@ -60,12 +68,19 @@ Sie haben folgende Rechte:
 - **Datenübertragbarkeit** / переносимість даних
 - **Widerspruch** gegen die Verarbeitung / заперечення проти обробки
 
-Kontakt: support@gluckenkurs.com
+**Kontakt für Datenschutzanfragen:**
+E-Mail: andrii.it.info@gmail.com
+Telefon: +49 160 95030120
 
 ## 7. Widerruf der Einwilligung / Відкликання згоди
 
-Sie können Ihre Einwilligung jederzeit widerrufen. Senden Sie eine Nachricht an unseren Bot mit dem Befehl /delete_data
-Ви можете відкликати свою згоду в будь-який час. Надішліть повідомлення нашому боту з командою /delete_data
+Sie können Ihre Einwilligung jederzeit widerrufen:
+Ви можете відкликати свою згоду в будь-який час:
+
+- Senden Sie eine Nachricht an unseren Bot mit dem Befehl /delete_data
+  Надішліть повідомлення боту з командою /delete_data
+- E-Mail an: andrii.it.info@gmail.com
+  Електронна пошта на: andrii.it.info@gmail.com
 
 ## 8. Beschwerderecht / Право на скаргу
 
