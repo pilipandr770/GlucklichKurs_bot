@@ -28,6 +28,12 @@ Thumbs.db
 # Reminders storage
 .reminders.json
 
+# Database
+app.db
+*.db
+*.sqlite
+*.sqlite3
+
 # Stripe test data
 *.stripe/
 
