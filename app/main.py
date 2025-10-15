@@ -50,8 +50,16 @@ async def run_bot():
     
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     
-    # Видаляємо webhook, якщо він був встановлений раніше
-    await bot.delete_webhook(drop_pending_updates=True)
+    # КРИТИЧНО: Видаляємо webhook перед polling
+    print("🔄 Deleting webhook (if exists)...")
+    try:
+        await bot.delete_webhook(drop_pending_updates=True)
+        print("✅ Webhook deleted successfully")
+    except Exception as e:
+        print(f"⚠️  Warning: Failed to delete webhook: {e}")
+    
+    # Затримка для завершення всіх pending operations
+    await asyncio.sleep(2)
     
     dp = Dispatcher()
     
@@ -76,9 +84,10 @@ def main():
     fastapi_thread = threading.Thread(target=run_fastapi, daemon=True)
     fastapi_thread.start()
     
-    # Невелика затримка, щоб FastAPI встиг запуститися
+    # Затримка для graceful shutdown старого деплою (Render)
     import time
-    time.sleep(2)
+    print("⏳ Waiting 10 seconds for old deployment to shutdown...")
+    time.sleep(10)
     
     # Запускаємо бота в головному потоці
     asyncio.run(run_bot())
