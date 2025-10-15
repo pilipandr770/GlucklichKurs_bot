@@ -1,21 +1,21 @@
 ﻿# file: app/bot/handlers/start.py
-import os, json
+import os
 from aiogram import Router, types, F
 from aiogram.filters import CommandStart
 from ..keyboards.main_menu import main_menu
 from ..utils.openai_client import chat_completion
+from ..utils.agent_loader import get_agent_prompt
 from ...storage.db import upsert_user, mark_intro_seen
 
 router = Router()
 
-WELCOME_SALES_PROMPT = [
-    {"role":"system","content":"Ти — привітний сейлз-агент курсу '10 кроків до щастя'. Коротко, тепло, по суті. Запрошуй подивитись вступний урок і пояснюй користь курсу. Уникай довгих текстів."}
-]
-
-def load_intro_lesson():
-    path = os.path.join("data","lessons","lesson_1.json")
-    if not os.path.exists(path): return None
-    with open(path,"r",encoding="utf-8") as f: return json.load(f)
+def load_intro_text():
+    """Завантажує вступний текст про курс з data/intro.txt"""
+    path = os.path.join("data", "intro.txt")
+    if not os.path.exists(path):
+        return "Вступний урок готується. Спробуйте пізніше 🙏"
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
 
 @router.message(CommandStart())
 async def on_start(msg: types.Message):
@@ -32,7 +32,13 @@ async def on_start(msg: types.Message):
 async def on_about(cb: types.CallbackQuery):
     user = cb.from_user
     upsert_user(user.id, user.username)
-    resp = chat_completion(WELCOME_SALES_PROMPT + [{"role":"user","content":f"Користувач @{user.username} питає: розкажи коротко про курс і як він працює."}])
+    
+    # Використовуємо sales_agent з YAML
+    sales_prompt = get_agent_prompt("sales_agent")
+    resp = chat_completion([
+        {"role": "system", "content": sales_prompt},
+        {"role": "user", "content": f"Користувач @{user.username} питає: розкажи коротко про курс і як він працює."}
+    ])
     text = resp.choices[0].message.content
     await cb.message.edit_text(text, reply_markup=main_menu())
     await cb.answer()
@@ -40,15 +46,34 @@ async def on_about(cb: types.CallbackQuery):
 @router.callback_query(F.data=="intro")
 async def on_intro(cb: types.CallbackQuery):
     upsert_user(cb.from_user.id, cb.from_user.username)
-    lesson = load_intro_lesson()
-    if not lesson:
-        await cb.message.answer("Вступний урок ще готується. Спробуй пізніше 🙏", reply_markup=main_menu())
+    
+    # Завантажуємо повний вступний текст
+    intro_text = load_intro_text()
+    
+    # Розділяємо на частини, якщо текст довгий
+    if len(intro_text) > 4000:
+        parts = []
+        current = ""
+        for line in intro_text.split("\n"):
+            if len(current) + len(line) + 1 < 4000:
+                current += line + "\n"
+            else:
+                parts.append(current)
+                current = line + "\n"
+        if current:
+            parts.append(current)
+        
+        for idx, part in enumerate(parts):
+            if idx == 0:
+                await cb.message.answer(part)
+            else:
+                await cb.message.answer(part)
+        
+        await cb.message.answer("Головне меню:", reply_markup=main_menu())
     else:
-        text = f"🎓 <b>{lesson['title']}</b>\n\n{lesson['hook']}\n\n{lesson['core']}"
-        if len(text) > 4000:
-            text = text[:4000] + "..."
-        await cb.message.answer(text, reply_markup=main_menu())
-        mark_intro_seen(cb.from_user.id)
+        await cb.message.answer(intro_text, reply_markup=main_menu())
+    
+    mark_intro_seen(cb.from_user.id)
     await cb.answer()
 
 
