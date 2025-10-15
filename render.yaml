@@ -40,7 +40,7 @@ services:
         sync: false
       - key: REMINDER_DAYS
         value: 3
-    healthCheckPath: /health
+    # healthCheckPath: /health  # Відключено через конфлікт з polling
 
 # Примітка: 
 # - Один сервіс замість двох (економія коштів)

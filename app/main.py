@@ -49,6 +49,10 @@ async def run_bot():
             print(f"Failed to send reminder to {uid}: {e}")
     
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    
+    # Видаляємо webhook, якщо він був встановлений раніше
+    await bot.delete_webhook(drop_pending_updates=True)
+    
     dp = Dispatcher()
     
     # Реєструємо роутери
