@@ -19,4 +19,6 @@ def load_agent_config(agent_name: str) -> Dict:
 def get_agent_prompt(agent_name: str) -> str:
     """Повертає system prompt для агента"""
     config = load_agent_config(agent_name)
-    return config.get("instructions", "")
+    instructions = config.get("instructions", "")
+    print(f"📝 Loaded {agent_name}: {len(instructions)} chars")
+    return instructions
