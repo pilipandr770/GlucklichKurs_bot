@@ -87,8 +87,8 @@ def main():
     
     # Затримка для graceful shutdown старого деплою (Render)
     import time
-    print("⏳ Waiting 10 seconds for old deployment to shutdown...")
-    time.sleep(10)
+    print("⏳ Waiting 30 seconds for old deployment to shutdown...")
+    time.sleep(30)
     
     # Запускаємо бота в головному потоці
     asyncio.run(run_bot())
