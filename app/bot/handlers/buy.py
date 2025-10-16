@@ -2,9 +2,10 @@
 import os
 from aiogram import Router, types, F
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from ...storage.db import upsert_user, save_stripe_metadata, get_user_by_id
+from ...storage.db import upsert_user, get_user_by_id
 
 router = Router()
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
 
 def confirmation_keyboard():
     """Клавіатура для підтвердження перед оплатою"""
@@ -15,17 +16,24 @@ def confirmation_keyboard():
     ])
 
 def payment_keyboard(user_id: int):
-    """Клавіатура з посиланням на оплату"""
-    base = os.getenv("BASE_URL","http://localhost:8000")
+    """Клавіатура з посиланням на оплату (передаємо tg_id)"""
     return InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="💳 Перейти до оплати", url=f"{base}/pay?user_id={user_id}")],
+        [InlineKeyboardButton(text="💳 Перейти до оплати", url=f"{BASE_URL}/pay?tg_id={user_id}")],
         [InlineKeyboardButton(text="🔙 Назад", callback_data="back_to_main")]
     ])
 
-@router.message(F.text == "/pay")
+@router.message(commands={"pay"})
 async def pay_cmd(m: types.Message):
+    """Команда /pay — швидкий доступ до оплати"""
     upsert_user(m.from_user.id, m.from_user.username)
-    await show_purchase_warning(m)
+    url = f"{BASE_URL}/pay?tg_id={m.from_user.id}"
+    await m.answer(
+        "💳 <b>Оплата курсу «10 кроків до щастя»</b>\n\n"
+        "🔗 Перейдіть за посиланням для оплати через Stripe:\n"
+        f"{url}\n\n"
+        "Після успішної оплати ви отримаєте повідомлення з інвайт-лінком до приватного каналу.\n\n"
+        "⚠️ Перед оплатою ознайомтесь з умовами: /legal"
+    )
 
 @router.callback_query(F.data=="buy")
 async def buy_cb(cb: types.CallbackQuery):

@@ -38,6 +38,8 @@ services:
         sync: false
       - key: PAID_CHANNEL_ID
         sync: false
+      - key: PAID_CHANNEL_LINK
+        sync: false
       - key: REMINDER_DAYS
         value: 3
     # healthCheckPath: /health  # Відключено через конфлікт з polling
