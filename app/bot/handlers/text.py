@@ -10,6 +10,8 @@ router = Router()
 
 @router.message(F.text)
 async def on_text(msg: types.Message):
+    print(f"📨 Received message from user {msg.from_user.id}: {msg.text[:50]}")
+    
     if not msg.text or msg.text.strip() == "":
         return
     
@@ -18,6 +20,9 @@ async def on_text(msg: types.Message):
     
     # Перевіряємо, чи користувач оплатив курс
     user = get_user_by_id(msg.from_user.id)
+    is_paid = user and user.get("is_paid") == 1
+    
+    print(f"👤 User {msg.from_user.id} paid status: {is_paid}")
     is_paid = user and user.get("is_paid") == 1
     
     # Застосовуємо Safety Guard
