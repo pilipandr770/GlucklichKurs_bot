@@ -7,6 +7,7 @@ from aiogram.filters import ChatMemberUpdatedFilter, IS_MEMBER, IS_NOT_MEMBER
 from ..utils.openai_client import chat_completion
 from ..utils.agent_loader import get_agent_prompt
 from ..utils.lesson_loader import get_full_lessons_context
+from ..utils.safety_guards import apply_guard
 import os
 
 router = Router()
@@ -29,6 +30,13 @@ async def channel_message(msg: types.Message):
         return
     
     print(f"📝 Channel message from {msg.from_user.id}: {msg.text[:50]}...")
+    
+    # Застосовуємо Safety Guard (coach type)
+    is_allowed, rejection_message = await apply_guard(msg.text, "coach")
+    
+    if not is_allowed:
+        await msg.reply(rejection_message)
+        return
     
     # Використовуємо coach_agent з повним контекстом уроків
     coach_prompt = get_agent_prompt("coach_agent")

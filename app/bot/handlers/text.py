@@ -3,6 +3,7 @@ from aiogram import Router, types, F
 from ..utils.openai_client import chat_completion
 from ..utils.agent_loader import get_agent_prompt
 from ..utils.lesson_loader import get_full_lessons_context
+from ..utils.safety_guards import apply_guard
 from ...storage.db import upsert_user, get_user_by_id
 
 router = Router()
@@ -18,6 +19,14 @@ async def on_text(msg: types.Message):
     # Перевіряємо, чи користувач оплатив курс
     user = get_user_by_id(msg.from_user.id)
     is_paid = user and user.get("is_paid") == 1
+    
+    # Застосовуємо Safety Guard
+    agent_type = "coach" if is_paid else "sales"
+    is_allowed, rejection_message = await apply_guard(msg.text, agent_type)
+    
+    if not is_allowed:
+        await msg.answer(rejection_message)
+        return
     
     if is_paid:
         # Використовуємо coach_agent з повним контекстом уроків
