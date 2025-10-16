@@ -22,7 +22,7 @@ def payment_keyboard(user_id: int):
         [InlineKeyboardButton(text="🔙 Назад", callback_data="back_to_main")]
     ])
 
-@router.message(commands={"pay"})
+@router.message(F.text == "/pay")
 async def pay_cmd(m: types.Message):
     """Команда /pay — швидкий доступ до оплати"""
     upsert_user(m.from_user.id, m.from_user.username)
