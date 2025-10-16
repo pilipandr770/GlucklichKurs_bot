@@ -20,5 +20,5 @@ def get_agent_prompt(agent_name: str) -> str:
     """Повертає system prompt для агента"""
     config = load_agent_config(agent_name)
     instructions = config.get("instructions", "")
-    print(f"📝 Loaded {agent_name}: {len(instructions)} chars")
+    # print(f"📝 Loaded {agent_name}: {len(instructions)} chars")  # Debug line
     return instructions

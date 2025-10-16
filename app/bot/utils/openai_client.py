@@ -10,17 +10,9 @@ TTS = os.getenv("OPENAI_MODEL_TTS", "gpt-4o-mini-tts")
 STT = os.getenv("OPENAI_MODEL_STT", "whisper-1")
 
 def chat_completion(messages, model: str = GPT):
-    print(f"🔍 OpenAI Request:")
-    print(f"   Model: {model}")
-    print(f"   Messages count: {len(messages)}")
-    for idx, msg in enumerate(messages):
-        role = msg.get("role", "unknown")
-        content_len = len(msg.get("content", ""))
-        content_preview = msg.get("content", "")[:100]
-        print(f"   [{idx}] {role}: {content_len} chars - {content_preview}...")
-    
+    # Логування для діагностики (можна видалити після тестування)
+    # print(f"🔍 OpenAI Request: {len(messages)} messages")
     response = _client.chat.completions.create(model=model, messages=messages)
-    print(f"✅ OpenAI Response: {len(response.choices[0].message.content)} chars")
     return response
 
 def speech_to_text(audio_bytes: bytes, filename="voice.ogg", model: str = STT) -> str:
