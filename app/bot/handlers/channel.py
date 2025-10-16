@@ -30,6 +30,7 @@ async def channel_message(msg: types.Message):
         return
     
     print(f"📝 Channel message from {msg.from_user.id}: {msg.text[:50]}...")
+    print(f"🔵 [DEBUG] chat_id={msg.chat.id}, PAID_CHANNEL_ID={PAID_CHANNEL_ID}")
     
     # Застосовуємо Safety Guard (coach type)
     is_allowed, rejection_message = await apply_guard(msg.text, "coach")
@@ -41,6 +42,10 @@ async def channel_message(msg: types.Message):
     # Використовуємо coach_agent з повним контекстом уроків
     coach_prompt = get_agent_prompt("coach_agent")
     lessons_context = get_full_lessons_context()
+    
+    print(f"🔵 [DEBUG] coach_prompt length: {len(coach_prompt)} chars")
+    print(f"🔵 [DEBUG] lessons_context length: {len(lessons_context)} chars")
+    print(f"🔵 [DEBUG] First 200 chars of coach_prompt: {coach_prompt[:200]}")
     
     messages = [
         {"role": "system", "content": coach_prompt},
